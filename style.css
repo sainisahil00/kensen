@@ -1,0 +1,59 @@
+:root{--ink:#121314;--ink2:#1b1d1f;--steel:#8f969b;--bone:#e8e4d9;--paper:#e6e3da;--brass:#b39b62;--seal:#a8321f;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0}
+body{background:var(--ink);color:var(--bone);font:400 17px/1.65 "Hanken Grotesk",system-ui,sans-serif}
+h1,h2,h3,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;line-height:1.02}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:linear-gradient(#121314dd,transparent)}
+nav b{font:600 24px "Cormorant Garamond",serif;letter-spacing:.08em}
+nav div a{margin-left:26px;text-decoration:none;font-size:15px;color:var(--steel)}nav div a:hover{color:var(--bone)}
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;background:#0c0d0e url(images/hero-samurai.jpg) right 20% center/cover no-repeat;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 18%,#121314cc 48%,transparent 85%),linear-gradient(0deg,var(--ink),transparent 35%)}
+.hero .wrap{position:relative;padding-bottom:12vh;width:100%}
+.hero h1{font-size:clamp(52px,9vw,128px);max-width:9em;letter-spacing:-.015em;animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both}
+.hero p{max-width:30em;margin:26px 0 34px;color:#c9c5ba;animation:rise 1.4s .25s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}}
+.kanji{position:absolute;right:32px;top:110px;writing-mode:vertical-rl;font:400 64px/1.2 "Cormorant Garamond",serif;color:var(--bone);background:var(--seal);padding:14px 10px;border-radius:3px}
+.btn{display:inline-block;border:1px solid var(--bone);padding:13px 28px;text-decoration:none;transition:.25s}
+.btn:hover{background:var(--bone);color:var(--ink)}
+section{padding:110px 0}
+h2{font-size:clamp(38px,5vw,68px);margin-bottom:14px}
+.lede{color:var(--steel);max-width:36em;margin-bottom:44px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.chips button{background:none;border:1px solid #3a3d40;color:var(--steel);padding:7px 18px;border-radius:99px;font:inherit;font-size:15px;cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.arm{display:grid;grid-template-columns:300px 1fr;gap:56px;align-items:start}
+.idx{display:flex;flex-direction:column;border-top:1px solid #2c2f31}
+.idx button{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;padding:16px 4px;border-bottom:1px solid #2c2f31;font:400 30px "Cormorant Garamond",serif;color:var(--steel);transition:.25s}
+.idx button small{font:400 14px "Hanken Grotesk",sans-serif}
+.idx button:hover,.idx button[aria-selected=true]{color:var(--bone);padding-left:14px}
+.idx button[aria-selected=true]{border-bottom-color:var(--brass)}
+.det{display:grid;grid-template-columns:minmax(220px,.8fr) 1.2fr;gap:40px;position:sticky;top:30px}
+.plate{background:var(--paper);color:#17181a;aspect-ratio:3/4.4;display:grid;place-items:center;overflow:hidden;position:relative;border-radius:2px}
+.plate img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.plate svg{height:88%}
+.plate i{position:absolute;left:14px;top:12px;font:600 34px "Cormorant Garamond",serif;writing-mode:vertical-rl;color:var(--seal);font-style:normal}
+.det.sw>*{animation:fade .5s both}@keyframes fade{from{opacity:0}}
+.det h3{font-size:clamp(44px,5vw,72px)}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:22px 0;border-top:1px solid #2c2f31}
+.meta div{padding:11px 0;border-bottom:1px solid #2c2f31}.meta span{display:block;font-size:13px;color:var(--steel)}
+.det p{max-width:34em;margin-bottom:16px;color:#cfcbc0}
+.fact{border-left:2px solid var(--brass);padding-left:16px;color:var(--bone)!important;font-style:italic}
+.tl{border-left:1px solid #34373a;margin-left:6px}
+.tl div{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:0 0 38px 30px;position:relative}
+.tl div:before{content:"";position:absolute;left:-5px;top:12px;width:9px;height:9px;background:var(--brass);border-radius:50%}
+.tl b{font:400 30px "Cormorant Garamond",serif;color:var(--brass)}
+.tl p{max-width:38em;color:#c4c0b5}
+.anat{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.anat .plate{aspect-ratio:auto;height:560px;max-width:260px;margin:auto;width:100%}
+.anat .plate svg{height:100%}
+.parts button{all:unset;cursor:pointer;display:block;width:100%;padding:14px 0;border-bottom:1px solid #2c2f31;font:400 28px "Cormorant Garamond",serif;color:var(--steel)}
+.parts button[aria-selected=true]{color:var(--bone)}
+.parts p{font:400 16px "Hanken Grotesk",sans-serif;color:#c4c0b5;max-height:0;overflow:hidden;transition:.4s}
+.parts button[aria-selected=true] p{max-height:120px;padding-top:6px}
+.mark{transition:.45s}
+footer{border-top:1px solid #2c2f31;padding:50px 0;color:var(--steel);font-size:15px}
+@media(max-width:860px){.arm,.det,.anat{grid-template-columns:1fr}.det{position:static}.idx{flex-direction:row;overflow-x:auto;border:0;gap:6px}.idx button{white-space:nowrap;border:1px solid #2c2f31;padding:8px 16px;font-size:24px}.idx button small{display:none}.tl div{grid-template-columns:1fr;gap:4px}.kanji{top:90px;right:16px;font-size:44px}nav div a:not(:last-child){display:none}.anat .plate{height:420px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
