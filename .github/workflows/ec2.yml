@@ -1,4 +1,4 @@
-name: Website CI-CD Pipeline
+name: Kensen Website CI-CD
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
 
 jobs:
 
-  # =========================
-  # STAGE 1: TEST
-  # =========================
+  # ==========================
+  # 1. TEST
+  # ==========================
   test:
-    name: Test Website
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
@@ -22,25 +22,21 @@ jobs:
 
       - name: Test Website Files
         run: |
-          echo "Starting website tests..."
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          test -d images
 
-          if [ ! -f index.html ]; then
-            echo "ERROR: index.html not found"
-            exit 1
-          fi
-
-          echo "index.html found"
-
-          echo "Testing completed successfully"
+          echo "All required files are present"
+          echo "Test stage completed successfully"
 
 
-  # =========================
-  # STAGE 2: BUILD
-  # =========================
+  # ==========================
+  # 2. BUILD
+  # ==========================
   build:
-    name: Build Website
+    name: Build
     runs-on: ubuntu-latest
-
     needs: test
 
     steps:
@@ -49,35 +45,35 @@ jobs:
 
       - name: Build Website
         run: |
-          echo "Building website..."
-
           mkdir -p build
 
-          cp -r . build/
+          cp index.html build/
+          cp style.css build/
+          cp script.js build/
+          cp -r images build/
 
-          echo "Build completed successfully"
+          echo "Website build completed"
 
-      - name: Upload Build Artifact
+      - name: Upload Build Files
         uses: actions/upload-artifact@v4
         with:
-          name: website-build
+          name: kensen-website
           path: build/
 
 
-  # =========================
-  # STAGE 3: DEPLOY
-  # =========================
+  # ==========================
+  # 3. DEPLOY
+  # ==========================
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
-
     needs: build
 
     steps:
-      - name: Download Build Artifact
+      - name: Download Build Files
         uses: actions/download-artifact@v4
         with:
-          name: website-build
+          name: kensen-website
           path: build/
 
       - name: Configure SSH
@@ -88,18 +84,21 @@ jobs:
 
           chmod 600 ~/.ssh/id_rsa
 
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Copy Website to EC2
         run: |
+          ssh ubuntu@${{ secrets.EC2_HOST }} \
+            "mkdir -p /tmp/kensen-deploy"
+
           scp -r build/* \
-          ubuntu@${{ secrets.EC2_HOST }}:/tmp/website-deploy/
+            ubuntu@${{ secrets.EC2_HOST }}:/tmp/kensen-deploy/
 
       - name: Deploy Website
         run: |
           ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
 
-            sudo cp -r /tmp/website-deploy/* /var/www/html/
+            sudo cp -r /tmp/kensen-deploy/* /var/www/html/
 
             sudo chown -R www-data:www-data /var/www/html
 
@@ -109,6 +108,8 @@ jobs:
 
             sudo systemctl restart nginx
 
-            echo "Deployment completed successfully"
+            rm -rf /tmp/kensen-deploy
+
+            echo "Deployment successful"
 
           EOF
